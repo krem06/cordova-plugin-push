@@ -121,14 +121,17 @@
 
     <framework src="PushKit.framework"/>
 
-    <podspec>
+
+    <podspec-repo url="../../custom/cordova-plugin-fbsdk"/>
+    <podspec name="FirebaseMessaging">
       <config>
-        <source url="https://cdn.cocoapods.org/"/>
+        <source url="https://github.com/krem06/firebase-ios-sdk"/>
       </config>
       <pods use-frameworks="true">
         <pod name="Firebase/Messaging" spec="8.1.1" />
       </pods>
     </podspec>
+
   </platform>
 
   <platform name="windows">
