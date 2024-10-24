@@ -69,6 +69,17 @@ NSString *const pushPluginApplicationDidBecomeActiveNotification = @"pushPluginA
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    const unsigned *tokenBytes = [deviceToken bytes];
+    NSString *hexToken = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+                          tokenBytes[0], tokenBytes[1], tokenBytes[2], tokenBytes[3],
+                          tokenBytes[4], tokenBytes[5], tokenBytes[6], tokenBytes[7],
+                          tokenBytes[8], tokenBytes[9], tokenBytes[10], tokenBytes[11],
+                          tokenBytes[12], tokenBytes[13], tokenBytes[14], tokenBytes[15]];
+    NSLog(@"APNS Device Token: %@", hexToken);
+    // Store the device token for later use
+    [[NSUserDefaults standardUserDefaults] setObject:hexToken forKey:@"apnsDeviceToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     PushPlugin *pushHandler = [self getCommandInstance:@"PushNotification"];
     [pushHandler didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
